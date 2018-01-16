@@ -72,7 +72,11 @@
     <div id="tooltip"></div>
     <!-- div to hold tooltip. -->
     <svg width="960" height="600" id="statesvg"></svg>
+
     <!-- svg to hold the map. -->
+
+
+    <!-- svg to hold the pie chart. -->
 
 
     <script src="uStates.js"></script>
@@ -100,7 +104,7 @@
                     medianHouseholdIncome: d["Median Household Income"],
                     percentOfPopulation: d["Percent of Population"],
                     percentOfIncome: d["Percent of Income"],
-                    color: d3.interpolate("white", "green")(percentOfPopulation / 100)
+                    color: d3.interpolate("red", "blue")(percentOfPopulation / 100)
                 };
             });
 

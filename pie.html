@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <style>
+        .arc text {
+            font: 10px sans-serif;
+            text-anchor: middle;
+        }
+        
+        .arc path {
+            stroke: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <button id="womenChart">Women</button>
+        <button id="menChart">Men</button>
+    </div>
+    <svg width="400" height="300" id="ageGroup1"></svg>
+    <svg width="400" height="300" id="ageGroup2"></svg>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+    <script>
+        (function() {
+
+
+            var svg1 = d3.select("#ageGroup1"),
+                width = +svg1.attr("width"),
+                height = +svg1.attr("height"),
+                radius = Math.min(width, height) / 2,
+                g1 = svg1.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+            var svg2 = d3.select("#ageGroup2"),
+                //  width2 = +svg2.attr("width"),
+                // height2 = +svg2.attr("height"),
+                //radius2 = Math.min(width2, height2) / 2,
+                g2 = svg2.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+
+            var color = d3.scaleOrdinal(["#98abc5", "#8a89a6", "#7b6888"]);
+
+            var pie = d3.pie()
+                .sort(null)
+                .value(function(d) {
+                    return d["Percent Value"];
+                });
+
+            var path = d3.arc()
+                .outerRadius(radius - 10)
+                .innerRadius(0);
+
+            var label = d3.arc()
+                .outerRadius(radius - 40)
+                .innerRadius(radius - 40);
+            var groupByGender,
+                groupByAgeWomen,
+                groupByAgeMen;
+
+
+            d3.csv("data-gender-age.csv", function(d) {
+                console.log(d);
+                // valuesByDecade = d3.nest()
+
+                //d.percentValue = +d["Percent Value"];
+                return d;
+            }, function(error, data) {
+                //  console.log(data);
+                if (error) throw error;
+
+                groupByGender = _.groupBy(data, "Gender");
+                groupByAgeWomen = _.groupBy(groupByGender.women, "Age");
+                groupByAgeMen = _.groupBy(groupByGender.men, "Age");
+                console.log(groupByGender);
+                console.log(groupByAgeWomen);
+
+                console.log(groupByAgeMen);
+
+
+
+                drawPieChart(g1, groupByAgeWomen["19 to 27"]);
+                drawPieChart(g2, groupByAgeWomen["28 to 36"]);
+
+
+            });
+            var menChartload = document.getElementById("menChart");
+            menChartload.addEventListener("click", function() {
+                //run code here
+                console.log('groupByAgeMen["19 to 27"]');
+                drawPieChart(g1, groupByAgeMen["19 to 27"]);
+                drawPieChart(g2, groupByAgeMen["28 to 36"]);
+            });
+            var womenChartload = document.getElementById("womenChart");
+            womenChartload.addEventListener("click", function() {
+                //run code here
+                console.log('groupByAgWomen["19 to 27"]');
+                //  document.getElementById('#ageGroup1').innerHTML = "";
+                // document.getElementById('#ageGroup2').innerHTML = "";
+                drawPieChart(g1, groupByAgeWomen["19 to 27"]);
+                drawPieChart(g2, groupByAgeWomen["28 to 36"]);
+            });
+
+            // function showPieChart(gender) {
+            /*  console.log(gender)
+              if (gender === 'men') {
+                  drawPieChart(g1, groupByAgeMen["19 to 27"]);
+                  drawPieChart(g2, groupByAgeMen["28 to 36"]);
+              } else {
+                  drawPieChart(g1, groupByAgeWomen["19 to 27"]);
+                  drawPieChart(g2, groupByAgeWomen["28 to 36"]);
+              }*/
+            //}
+
+            function drawPieChart(g, groupByAgeWomen) {
+                //  document.getElementById(g).innerHTML = "";
+
+                var arc = g.selectAll(".arc")
+                    .data(pie(groupByAgeWomen))
+                    .enter().append("g")
+                    .attr("class", "arc");
+
+                arc.append("path")
+                    .attr("d", path)
+                    .attr("fill", function(d) {
+                        return color(d.data.Preparedness);
+                    });
+
+                arc.append("text")
+                    .attr("transform", function(d) {
+                        return "translate(" + label.centroid(d) + ")";
+                    })
+                    .attr("dy", "0.35em")
+                    .text(function(d) {
+                        return d.data.Preparedness;
+                    });
+
+
+                /*  var arc2 = g2.selectAll(".arc")
+                      .data(pie(groupByAgeWomen["28 to 36"]))
+                      .enter().append("g2")
+                      .attr("class", "arc");
+
+                  arc2.append("path")
+                      .attr("d", path)
+                      .attr("fill", function(d) {
+                          return color(d.data.Preparedness);
+                      });
+
+                  arc2.append("text")
+                      .attr("transform", function(d) {
+                          return "translate(" + label.centroid(d) + ")";
+                      })
+                      .attr("dy", "0.35em")
+                      .text(function(d) {
+                          return d.data.Preparedness;
+                      });*/
+
+            }
+
+        })();
+    </script>
+</body>
+
+</html>
