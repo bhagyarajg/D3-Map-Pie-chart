@@ -11,7 +11,7 @@
            g2 = svg2.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
 
-       var color = d3.scaleOrdinal(["#98abc5", "#8a89a6", "#7b6888"]);
+       var color = d3.scaleOrdinal(["#cd3700", "#4af79c", "#0399D3"]);
 
        var pie = d3.pie()
            .sort(null)

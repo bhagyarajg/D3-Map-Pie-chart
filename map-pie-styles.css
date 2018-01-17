@@ -68,12 +68,21 @@
     stroke: #fff;
 }
 
-.genderBtn {
-    width: 130px;
-    margin: 10px 135px;
+.btnGroup {
+    margin: 0 auto;
+    width: 40%
 }
 
-.ageDisplay span {
-    color: blue;
-    padding: 10px 135px;
+.genderBtn {
+    width: 130px;
+    margin: 0 auto;
+}
+
+.ageDisplay {
+    margin: 0 auto;
+    width: 50%;
+}
+
+.row {
+    margin: 0
 }
