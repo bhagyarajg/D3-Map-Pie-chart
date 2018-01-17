@@ -11,3 +11,7 @@ Part 2: Pie Charts
 Created two side-by-side pie charts using data-gender-age.csv. Each chart represents the two age groups found in the "Age" column. Each pie chart division is  based on the "Preparedness" column while the value for each division is the "Percent Value" column.
 
 Included two buttons, labeled "Women" and "Men", above the interactive that toggle the displayed gender data with "Women" set as the default dataset.
+
+
+I have completed the assessment. Please review the code 
+Name : Bhagya Raj Gaddam
